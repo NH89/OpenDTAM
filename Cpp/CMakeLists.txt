@@ -1,62 +1,45 @@
-cmake_minimum_required (VERSION 2.6)
-set(CMAKE_BUILD_TYPE Debug) 
-project(dtam)
-cmake_policy(SET CMP0012 NEW)
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
-#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "/local_store/Qt/5.3/gcc_64/lib/cmake")# "/local_store/opencv-2.4.9/debug/unix-install/")
-#message(STATUS ${CMAKE_MODULE_PATH})
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -ggdb")
-
-find_package(OpenCV 4.1 REQUIRED)#3.1
-find_package(Qt5Core REQUIRED)
-find_package(CUDA REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
-#add_definitions( -D__OPENCV_BUILD=1 )
-#message(STATUS ${OpenCV_CONSIDERED_CONFIGS})
-
-macro (add_sources)
-    file (RELATIVE_PATH _relPath "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
-    foreach (_src ${ARGN})
-        if (_relPath)
-            list (APPEND DTAM_SOURCES "${_relPath}/${_src}")
-        else()
-            list (APPEND DTAM_SOURCES "${_src}")
-        endif()
-    endforeach()
-    if (_relPath)
-        # propagate SRCS to parent directory
-        set (DTAM_SOURCES ${DTAM_SOURCES} PARENT_SCOPE)
-    endif()
-endmacro(add_sources)
+# To control the setup of the module you could also set:
+# the_description - text to be used as current module description
+# the_label - label for current module
+# OPENCV_MODULE_TYPE - STATIC|SHARED - set to force override global settings for current module
+# OPENCV_MODULE_IS_PART_OF_WORLD - ON|OFF (default ON) - should the module be added to the opencv_world?
+# BUILD_${the_module}_INIT - ON|OFF (default ON) - initial value for BUILD_${the_module}
 
 
+# The verbose template for OpenCV module:
+#
+#   ocv_add_module(modname <dependencies>)
 
-set(BASEPATH "${CMAKE_SOURCE_DIR}")
- 
+#   ocv_glob_module_sources(([EXCLUDE_OPENCL] [EXCLUDE_CUDA] <extra sources&headers>)
+#                          or glob them manually and ocv_set_module_sources(...)
 
-#add_library(GraphicsLib SHARED graphics.cpp)#must be in own library so we can link against it.
+#   ocv_module_include_directories(<extra include directories>)
 
+#   ocv_create_module()
 
-add_subdirectory(CostVolume)
-add_subdirectory(Track)
-add_subdirectory(Optimizer)
-add_subdirectory(DepthmapDenoiseWeightedHuber)
-add_subdirectory(utils)
-add_subdirectory(Scheduler)
+#   <add extra link dependencies, compiler options, etc>
 
+#   ocv_add_precompiled_headers(${the_module})
 
-include_directories("${BASEPATH}" ${CUDA_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+#   <add extra installation rules>
 
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS};
-  -gencode arch=compute_30,code=sm_30;
-  -gencode arch=compute_35,code=sm_35;
-  -gencode arch=compute_50,code=sm_50;
-  --use_fast_math;
-  --restrict;
-  -lineinfo;
-  -O3
-)
-cuda_add_library(OpenDTAM SHARED ${DTAM_SOURCES} OpenDTAM.cpp)
-target_link_libraries(OpenDTAM pthread opencv_cudaimgproc opencv_cudastereo ${Boost_LIBRARIES})
-add_executable (a.out testprog.cpp convertAhandaPovRayToStandard.cpp graphics.cpp)
-target_link_libraries( a.out  OpenDTAM ${OpenCV_LIBS} ${Boost_LIBRARIES})
+#   ocv_add_accuracy_tests(<extra dependencies>)
+
+#   ocv_add_perf_tests(<extra dependencies>)
+
+#   ocv_add_samples(<extra dependencies>)
+#
+#
+# If module have no "extra" then you can define it in one line:
+#
+#   ocv_define_module(modname <dependencies>)
+
+if(IOS OR WINRT OR (NOT HAVE_CUDA AND NOT BUILD_CUDA_STUBS))
+  ocv_module_disable(cudaOpenDTAM)      
+endif()
+
+set(the_description "CUDA-implementation of OpenDTAM")
+
+ocv_warnings_disable(CMAKE_CXX_FLAGS /wd4127 /wd4100 /wd4324 /wd4512 /wd4515 -Wundef -Wmissing-declarations -Wshadow -Wunused-parameter)
+
+ocv_define_module(cudaOpenDTAM opencv_cudaimgproc opencv_cudastereo opencv_imgproc OPTIONAL opencv_cudev opencv_cudaarithm opencv_cudafilters WRAP python)
