@@ -1,0 +1,28 @@
+var class_optimizer =
+[
+    [ "Optimizer", "d9/d02/class_optimizer.html#a65b26c19e345aa0f52028453ef2812ba", null ],
+    [ "allocate", "d9/d02/class_optimizer.html#a14d9253ee2916bcead1caa5099547d75", null ],
+    [ "attach", "d9/d02/class_optimizer.html#a8939355f6e6314251e8563ebd1984a40", null ],
+    [ "depthMap", "d9/d02/class_optimizer.html#a2860db0cfafbf1362c80880bb4d69f74", null ],
+    [ "getTheta", "d9/d02/class_optimizer.html#aa525bd05d109e945ffe26b5c215aec0f", null ],
+    [ "initA", "d9/d02/class_optimizer.html#af48024919a540f0270778d00daae668b", null ],
+    [ "initOptimization", "d9/d02/class_optimizer.html#a302c29f6b127abee7531b1679e9cc004", null ],
+    [ "optimizeA", "d9/d02/class_optimizer.html#aea99d3494b272919851312b7ab05fcb4", null ],
+    [ "setDefaultParams", "d9/d02/class_optimizer.html#a7515219eab4e014ab6db8c6083c787d8", null ],
+    [ "_a", "d9/d02/class_optimizer.html#a8d4f593294d688031f29896003d10653", null ],
+    [ "_d", "d9/d02/class_optimizer.html#a8a41987b44b71d63d915ade6fb01d092", null ],
+    [ "cv", "d9/d02/class_optimizer.html#ad368647bff579d8729cc8715ecf918d6", null ],
+    [ "cvStream", "d9/d02/class_optimizer.html#af4d0e06930783f5b26e6a708ecf67d81", null ],
+    [ "epsilon", "d9/d02/class_optimizer.html#acff6c23d8190a96313f34e6974cc7966", null ],
+    [ "haveStableDepth", "d9/d02/class_optimizer.html#a052c11b7fca398973e06bc6a040a3472", null ],
+    [ "lambda", "d9/d02/class_optimizer.html#a76af31b716cbf82cf5449293d843705d", null ],
+    [ "sigma_d", "d9/d02/class_optimizer.html#a0bf03ff35886853552ee005cb3a3f821", null ],
+    [ "sigma_q", "d9/d02/class_optimizer.html#af35fe6d4d622e2aed9a9789350e9a06c", null ],
+    [ "stableDepth", "d9/d02/class_optimizer.html#a42f4d4a982218d5ffa7043d60774f428", null ],
+    [ "stableDepthEnqueued", "d9/d02/class_optimizer.html#a2d574cbee95cc89a3b219555e49f5a7f", null ],
+    [ "stableDepthReady", "d9/d02/class_optimizer.html#a9b9a91ff4a77ac9c1b3f30bb1c9822db", null ],
+    [ "theta", "d9/d02/class_optimizer.html#a1ffda0301e18e030f93f93a77afa7c3f", null ],
+    [ "thetaMin", "d9/d02/class_optimizer.html#a4bd28f363e76920a909dbef8d19c116b", null ],
+    [ "thetaStart", "d9/d02/class_optimizer.html#ab7675ad4fefbd0d61d09efd8490e3c2a", null ],
+    [ "thetaStep", "d9/d02/class_optimizer.html#a8e20b5b652cc1e260ff228aed5265c00", null ]
+];
